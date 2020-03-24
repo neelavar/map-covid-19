@@ -91,6 +91,10 @@ $ npm install
 
 ## Deployment
 
+**Build**
+
+Run `npm run build` - webpack will build the project.
+
 Deployment of this project is done in two steps:
 
 1. Cloud Functions: Run `npm run deploy:functions` to deploy the cloud functions
