@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --output-path ./public",
     "start": "webpack-dev-server --content-base ./public --output-path ./public --hot",
-    "deploy": "firebase deploy --only hosting:map-covid-19 -m $npm_package_version",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:hosting": "firebase deploy --only hosting:map-covid-19 -m $npm_package_version",
     "setup-countries": "firebase database:update /covid-19 ./src/countries.json"
   },
   "keywords": [
