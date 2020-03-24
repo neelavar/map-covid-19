@@ -36,6 +36,7 @@ Clone this repository and run `npm install`
 https://developers.google.com/maps/documentation/javascript/get-api-key
 
 Update the `src/config.js` with the API Key.
+For API Key restrictions, refer: https://cloud.google.com/docs/authentication/api-keys#api_key_restrictions
 
 ## CoVID-19 Data API `rapidapi.com`
 
@@ -106,6 +107,8 @@ If you wish to run the project locally, follow the steps:
 1. Ensure the `countries` is setup on RTDB - refer to RTDB Setup above.
 2. Deploy the cloud functions and let it start (check the console, to ensure the CoVID Data is updated)
 3. Run `npm start` to start the local webpack dev server
+
+>Note: If you've setup GMap [API Key restrictions](https://cloud.google.com/docs/authentication/api-keys#api_key_restrictions), ensure `localhost` is enabled.
 
 ## `deck.gl`
 
