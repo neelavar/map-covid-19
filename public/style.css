@@ -46,7 +46,8 @@ table td:nth-child(even) {
   z-index: 100;
 }
 
-#updated {
+.summary {
   color: white;
   font-size: 80%;
+  background-color: rgba(0,0,0,0.7);
 }
