@@ -21,6 +21,7 @@ export const showStats = ({ object, x, y }) => {
         <table>
           <tr><td>🦠 Cases</td><td>${formatNumber(cases)}</td></tr>
           <tr><td>📈 Mortality</td><td>${(deaths * 100/cases).toFixed(2)} %</td></tr>
+          <tr><td>🚶 Recovery Rate</td><td>${(total_recovered * 100/cases).toFixed(2)} %</td></tr>
         </table>
       `;
     el.style.display = 'block';
