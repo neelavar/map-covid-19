@@ -37,20 +37,29 @@ const getMappedCountries = (countries_stat, countries) => {
       const longitude = cf.long;
       const latitude = cf.lat;
       const flag = cf.flag;
-      const cases = Number(country.cases.replace(',', ''));
-      const deaths = Number(country.deaths.replace(',', ''));
-      const active_cases = Number(country.active_cases.replace(',', ''));
-      const new_cases = Number(country.new_cases.replace(',', ''));
-      const total_recovered = Number(country.total_recovered.replace(',', ''));
-      const serious_critical = Number(country.serious_critical.replace(',', ''));
+      const cases = Number(country.cases.replace(/,/g, ''));
+      const deaths = Number(country.deaths.replace(/,/g, ''));
+      const active_cases = Number(country.active_cases.replace(/,/g, ''));
+      const new_cases = Number(country.new_cases.replace(/,/g, ''));
+      const new_deaths = Number(country.new_deaths.replace(/,/g, ''));
+      const total_recovered = Number(country.total_recovered.replace(/,/g, ''));
+      const serious_critical = Number(country.serious_critical.replace(/,/g, ''));
+      const dpm = Number(country.deaths_per_1m_population.replace(/,/g, ''));
+      const tpm = Number(country.tests_per_1m_population.replace(/,/g, ''));
+      const tcmp = Number(country.total_cases_per_1m_population.replace(/,/g, ''));
+      // console.log({ total_recovered, country_tr: country.total_recovered });
       sourceData.push({
         ...country,
-        cases,
-        deaths,
-        total_recovered,
-        serious_critical,
-        active_cases,
-        new_cases,
+        cases: isNaN(cases) ? 0 : cases,
+        deaths: isNaN(deaths) ? 0 : deaths,
+        total_recovered: isNaN(total_recovered) ? 0 : total_recovered,
+        serious_critical: isNaN(serious_critical) ? 0 : serious_critical,
+        active_cases: isNaN(active_cases) ? 0 : active_cases,
+        new_cases: isNaN(new_cases) ? 0 : new_cases,
+        new_deaths: isNaN(new_deaths) ? 0 : new_deaths,
+        dpm: isNaN(dpm) ? 0 : dpm,
+        tpm: isNaN(tpm) ? 0 : tpm,
+        tcmp: isNaN(tcmp) ? 0 : tcmp,
         longitude,
         latitude,
         flag,
@@ -69,9 +78,9 @@ const setupTotals = (sourceData) => {
   let rc = 0;
   let ft = 0;
   sourceData.forEach((d) => {
-    tc += d.cases;
-    rc += d.total_recovered;
-    ft += d.deaths;
+    tc += Number(d.cases);
+    rc += Number(d.total_recovered);
+    ft += Number(d.deaths);
   });
   totalCases.innerHTML = `<b>${tc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</b>`;
   recoveries.innerHTML = `<b>${rc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</b>`;
@@ -92,9 +101,7 @@ const loadCovidData = (callback) => {
       const countries_stat = covid.countries_stat;
       const sourceData = getMappedCountries(countries_stat, countries);
       date = covid.statistic_taken_at.substring(0, 10);
-      // document.title = `CoVID-19 | Updated ${date}`;
       document.getElementById('updated').innerHTML = `Last Update: ${new Date(date).toLocaleDateString()}`;
-      // console.log({ sourceData });
       setupTotals(sourceData);
       callback(sourceData);
     });
@@ -107,16 +114,16 @@ window.onload = () => {
   if (origin !== 'map-covid-19.web.app') {
     confirm('Thank you for your interest. \nPlease visit https://map-covid-19.web.app');
   } else {
-    const gMapScript = document.createElement('script');
-    gMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GMAP_API_KEY}&callback=initMap`;
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        uid = user.uid;
-        document.head.appendChild(gMapScript);
-      } else {
-        uid = null;
-      }
-    });
+  const gMapScript = document.createElement('script');
+  gMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GMAP_API_KEY}&callback=initMap`;
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      uid = user.uid;
+      document.head.appendChild(gMapScript);
+    } else {
+      uid = null;
+    }
+  });
   }
 };
 
