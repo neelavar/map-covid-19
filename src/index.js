@@ -114,16 +114,16 @@ window.onload = () => {
   if (origin !== 'map-covid-19.web.app') {
     confirm('Thank you for your interest. \nPlease visit https://map-covid-19.web.app');
   } else {
-  const gMapScript = document.createElement('script');
-  gMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GMAP_API_KEY}&callback=initMap`;
-  firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      uid = user.uid;
-      document.head.appendChild(gMapScript);
-    } else {
-      uid = null;
-    }
-  });
+    const gMapScript = document.createElement('script');
+    gMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GMAP_API_KEY}&callback=initMap`;
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        uid = user.uid;
+        document.head.appendChild(gMapScript);
+      } else {
+        uid = null;
+      }
+    });
   }
 };
 

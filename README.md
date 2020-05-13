@@ -2,7 +2,7 @@
 
 This project is to map the novel Corona Virus infections data and depict the global impact on the Google Maps.
 
-For demo: https://map-covid-19.web.app
+For demo: [Demo deployment no longer active] - Please build and run locally.
 
 ## App Overview & Design Approach
 
